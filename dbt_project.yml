@@ -7,7 +7,8 @@ require-dbt-version: [">=1.6.0", "<2.0.0"]
 
 vars:
   ad_reporting:
-    ad_reporting__account_passthrough_metrics: []
+  #Here
+    ad_reporting__1account_passthrough_metrics: []
     ad_reporting__campaign_passthrough_metrics: []
     ad_reporting__ad_group_passthrough_metrics: []
     ad_reporting__ad_passthrough_metrics: []
