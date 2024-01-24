@@ -15,7 +15,7 @@ jobs:
 
       - name: Skip specific files
         run: |
-          ggit revert HEAD  # Undo the last commit while keeping changes
+          git revert HEAD  # Undo the last commit while keeping changes
           git rm --cached dbt_project.yml packages.yml  # Untrack specific files
           git commit -m "Skip specific files during sync"
 
