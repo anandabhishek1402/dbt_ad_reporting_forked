@@ -1,0 +1,25 @@
+name: Sync Branches
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync-branches:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Skip specific files
+        run: |
+          git reset --soft HEAD^  # Undo the last commit while keeping changes
+          git rm --cached dbt_project.yml packages.yml  # Untrack specific files
+          git commit -m "Skip specific files during sync"
+
+      - name: Push changes to synced-branch
+        run: |
+          git checkout prod
+          git push origin prod
