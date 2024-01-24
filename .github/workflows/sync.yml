@@ -12,7 +12,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
+        
+      - name: Set Git identity
+        run: |
+          git config user.email abhishekanan@mediabymother.com
+          git config user.name abhishekanan-cyb
+          
       - name: Skip specific files
         run: |
           git revert HEAD  # Undo the last commit while keeping changes
