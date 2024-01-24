@@ -17,11 +17,10 @@ jobs:
         run: |
           git config user.email abhishekanan@mediabymother.com
           git config user.name abhishekanan-cyb
-          
+
       - name: Skip specific files
         run: |
-          git revert HEAD  # Undo the last commit while keeping changes
-          git rm --cached dbt_project.yml packages.yml  # Untrack specific files
+          git checkout HEAD -- dbt_project.yml packages.yml  # Discard changes to specific files
           git commit -m "Skip specific files during sync"
 
       - name: Push changes to synced-branch
