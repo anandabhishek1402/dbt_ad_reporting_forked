@@ -33,9 +33,19 @@ jobs:
 
       - name: Add Labels to PR
         run: |
-          gh pr edit ${{ github.event.number }} --add-label automerge
+          PR_NUMBER=$(echo "${{ steps.pull.outputs.pull_request }}" | jq -r '.number')
+          gh pr edit $PR_NUMBER --add-label automerge
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      # automerge:
+      # runs-on: ubuntu-latest
+      # steps:
+      #   - id: automerge
+      #     name: automerge
+      #     uses: "pascalgn/automerge-action@v0.16.2"
+      #     env:
+      #       GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
       # - name: Add Labels to PR
       #   uses: actions/github-script@v7
       #   with:
