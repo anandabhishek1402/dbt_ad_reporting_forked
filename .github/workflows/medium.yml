@@ -33,7 +33,7 @@ jobs:
 
       - name: Add Labels to PR
         run: |
-          gh pr edit ${{ github.event.number }} --add-labels automerge
+          gh pr edit ${{ github.event.number }} --add-label automerge
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       # - name: Add Labels to PR
