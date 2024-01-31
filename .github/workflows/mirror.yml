@@ -1,49 +1,49 @@
-# name: Sync Main to Prod
+name: Sync Main to Prod
 
-# on:
-#   push:
-#     branches:
-#       - main
+on:
+  push:
+    branches:
+      - main
 
-# jobs:
-#   sync-main-to-prod:
-#     runs-on: ubuntu-latest
+jobs:
+  sync-main-to-prod:
+    runs-on: ubuntu-latest
 
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-#       - name: Create and switch to prod branch
-#         run: git checkout -b prod
+      - name: Create and switch to prod branch
+        run: git checkout -b prod
 
-#       - name: Set Git user identity
-#         run: |
-#           git config --local user.email "anandabhishek.78@hotmail.com"
-#           git config --local user.name "anandabhishek1402"
+      - name: Set Git user identity
+        run: |
+          git config --local user.email "anandabhishek.78@hotmail.com"
+          git config --local user.name "anandabhishek1402"
 
-#       - name: Preserve specific files
-#         run: |
-#           git checkout main -- dbt_project.yml # Add the files you want to exclude here
+      - name: Preserve specific files
+        run: |
+          git checkout main -- dbt_project.yml # Add the files you want to exclude here
 
-#       - name: Exclude dbt_project.yml from changes
-#         run: |
-#           git checkout --ours dbt_project.yml
-#           git add dbt_project.yml
+      - name: Exclude dbt_project.yml from changes
+        run: |
+          git checkout --ours dbt_project.yml
+          git add dbt_project.yml
 
-#       - name: Merge changes from main without committing
-#         run: git merge main --no-commit --no-ff
+      - name: Merge changes from main without committing
+        run: git merge main --no-commit --no-ff
 
-#       - name: Check for changes
-#         run: |
-#           git status
+      - name: Check for changes
+        run: |
+          git status
 
-#       # Additional steps can be added here if needed
+      # Additional steps can be added here if needed
 
-#       - name: Clean up if needed
-#         run: git merge --abort  # Abort the merge to prevent accidental commits
+      - name: Clean up if needed
+        run: git merge --abort  # Abort the merge to prevent accidental commits
 
-#       - name: Push changes to prod
-#         run: |
-#           git config --local user.email "anandabhishek.78@hotmail.com"
-#           git config --local user.name "anandabhishek1402"
-#           git push origin prod
+      - name: Push changes to prod
+        run: |
+          git config --local user.email "anandabhishek.78@hotmail.com"
+          git config --local user.name "anandabhishek1402"
+          git push origin prod
