@@ -1,0 +1,30 @@
+name: Sync Branches
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync-branches:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Switch to prod
+        run: git checkout prod
+
+      - name: Preserve specific files
+        run: |
+          git checkout prod -- dbt_project.yml packages.yml
+
+      - name: Merge changes from main
+        run: git merge main
+
+      - name: Push changes to prod
+        run: |
+          git config --local user.email "anandabhishek.78@hotmail.com"
+          git config --local user.name "GitHub Action"
+          git push origin prod
