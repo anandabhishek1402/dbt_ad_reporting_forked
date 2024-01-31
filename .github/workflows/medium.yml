@@ -1,62 +1,63 @@
-name: Sync Back to Develop
+# name: Sync Back to Develop
 
-on:
-  push:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  sync-branches:
-    runs-on: ubuntu-latest
-    name: Syncing branches
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set up Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12
-      - name: Opening pull request
-        id: pull
-        uses: tretuna/sync-branches@1.4.0
-        with:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          FROM_BRANCH: 'main'
-          TO_BRANCH: 'prod'
+# jobs:
+#   sync-branches:
+#     runs-on: ubuntu-latest
+#     name: Syncing branches
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v2
+#       - name: Set up Node
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: 12
+#       - name: Opening pull request
+#         id: pull
+#         uses: tretuna/sync-branches@1.4.0
+#         with:
+#           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+#           FROM_BRANCH: 'main'
+#           TO_BRANCH: 'prod'
 
-      # - name: Install GitHub CLI
-      #   run: |
-      #     sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
-      #     sudo apt-add-repository https://cli.github.com/packages
-      #     sudo apt-get update
-      #     sudo apt-get install gh
+#       # - name: Install GitHub CLI
+#       #   run: |
+#       #     sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+#       #     sudo apt-add-repository https://cli.github.com/packages
+#       #     sudo apt-get update
+#       #     sudo apt-get install gh
 
-      - name: Add Labels to PR
-        run: |
-          PR_NUMBER=$(echo "${{ steps.pull.outputs.pull_request }}" | jq -r '.number')
-          echo $PR_NUMBER
-          gh pr edit 12 --add-label automerge
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+#       - name: Add Labels to PR
+#         run: |
+#           PR_NUMBER=$(echo "${{ steps.pull.outputs.PULL_REQUEST_NUMBER }}" | jq -r '.number')
+#           echo $PR_NUMBER
+#           gh pr edit PR_NUMBER --add-label new
+#           gh pr edit 12 --add-label automerge
+#         env:
+#           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      # automerge:
-      # runs-on: ubuntu-latest
-      # steps:
-      #   - id: automerge
-      #     name: automerge
-      #     uses: "pascalgn/automerge-action@v0.16.2"
-      #     env:
-      #       GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-      # - name: Add Labels to PR
-      #   uses: actions/github-script@v7
-      #   with:
-      #     github-token: ${{secrets.GITHUB_TOKEN}}
-      #     script: |
-      #       const labelsToAdd = ['automerge']; // Add your desired labels here
-      #       const response = await github.issues.addLabels({
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         issue_number: context.payload.pull_request.number,
-      #         labels: labelsToAdd
-      #       });
-      #       console.log(response);
+#       # automerge:
+#       # runs-on: ubuntu-latest
+#       # steps:
+#       #   - id: automerge
+#       #     name: automerge
+#       #     uses: "pascalgn/automerge-action@v0.16.2"
+#       #     env:
+#       #       GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+#       # - name: Add Labels to PR
+#       #   uses: actions/github-script@v7
+#       #   with:
+#       #     github-token: ${{secrets.GITHUB_TOKEN}}
+#       #     script: |
+#       #       const labelsToAdd = ['automerge']; // Add your desired labels here
+#       #       const response = await github.issues.addLabels({
+#       #         owner: context.repo.owner,
+#       #         repo: context.repo.repo,
+#       #         issue_number: context.payload.pull_request.number,
+#       #         labels: labelsToAdd
+#       #       });
+#       #       console.log(response);
