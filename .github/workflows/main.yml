@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Checkout code
         run: git branch --list
@@ -19,18 +19,18 @@ jobs:
       - name: Checkout code
         run: git branch --list prod
 
-      - name: Switch to prod
-        run: git checkout prod
+      # - name: Switch to prod
+      #   run: git checkout prod
 
-      - name: Preserve specific files
-        run: |
-          git checkout prod -- dbt_project.yml packages.yml
+      # - name: Preserve specific files
+      #   run: |
+      #     git checkout prod -- dbt_project.yml packages.yml
 
-      - name: Merge changes from main
-        run: git merge main
+      # - name: Merge changes from main
+      #   run: git merge main
 
-      - name: Push changes to prod
-        run: |
-          git config --local user.email "anandabhishek.78@hotmail.com"
-          git config --local user.name "GitHub Action"
-          git push origin prod
+      # - name: Push changes to prod
+      #   run: |
+      #     git config --local user.email "anandabhishek.78@hotmail.com"
+      #     git config --local user.name "GitHub Action"
+      #     git push origin prod
