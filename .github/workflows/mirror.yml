@@ -13,37 +13,56 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Create and switch to prod branch
-        run: git checkout -b prod
+      # - name: Create and switch to prod branch
+      #   run: git checkout prod
 
       - name: Set Git user identity
         run: |
           git config --local user.email "anandabhishek.78@hotmail.com"
           git config --local user.name "anandabhishek1402"
-
-      - name: Preserve specific files
+      - name: run commands
         run: |
-          git checkout main -- dbt_project.yml # Add the files you want to exclude here
+          # Checkout to the prod branch
+            git fetch origin prod:prod
+            git checkout prod
+            
+            # Merge the main branch into the prod branch without committing
+            git merge --no-commit main
+            
+            # Unstage changes of the files you want to exclude
+            git reset HEAD dbt_project.yml #path/to/exclude/file2
+            
+            # Check if there are any other changes you want to exclude
+            git status
+            
+            # Commit the merge
+            git commit -m "Merge main into prod (excluding specific files)"
 
-      - name: Exclude dbt_project.yml from changes
-        run: |
-          git checkout --ours dbt_project.yml
-          git add dbt_project.yml
+            git push origin prod
 
-      - name: Merge changes from main without committing
-        run: git merge main --no-commit --no-ff
+      # - name: Preserve specific files
+      #   run: |
+      #     git checkout main -- dbt_project.yml # Add the files you want to exclude here
 
-      - name: Check for changes
-        run: |
-          git status
+      # - name: Exclude dbt_project.yml from changes
+      #   run: |
+      #     git checkout --ours dbt_project.yml
+      #     git add dbt_project.yml
 
-      # Additional steps can be added here if needed
+      # - name: Merge changes from main without committing
+      #   run: git merge main --no-commit --no-ff
 
-      - name: Clean up if needed
-        run: git merge --abort  # Abort the merge to prevent accidental commits
+      # - name: Check for changes
+      #   run: |
+      #     git status
 
-      - name: Push changes to prod
-        run: |
-          git config --local user.email "anandabhishek.78@hotmail.com"
-          git config --local user.name "anandabhishek1402"
-          git push origin prod
+      # # Additional steps can be added here if needed
+
+      # - name: Clean up if needed
+      #   run: git merge --abort  # Abort the merge to prevent accidental commits
+
+      # - name: Push changes to prod
+      #   run: |
+      #     git config --local user.email "anandabhishek.78@hotmail.com"
+      #     git config --local user.name "anandabhishek1402"
+      #     git push origin prod
