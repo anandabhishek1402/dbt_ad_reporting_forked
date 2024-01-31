@@ -1,76 +1,76 @@
-name: Sync Back to Develop
+# name: Sync Back to Develop
 
-on:
-  push:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  sync-branches:
-    runs-on: ubuntu-latest
-    name: Syncing branches
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+# jobs:
+#   sync-branches:
+#     runs-on: ubuntu-latest
+#     name: Syncing branches
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v2
         
-      - name: Set up Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12
-      - name: Set Git user identity
-        run: |
-          git config --local user.email "anandabhishek.78@hotmail.com"
-          git config --local user.name "anandabhishek1402"
+#       - name: Set up Node
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: 12
+#       - name: Set Git user identity
+#         run: |
+#           git config --local user.email "anandabhishek.78@hotmail.com"
+#           git config --local user.name "anandabhishek1402"
           
-      - name: Add Files
-        run: |
-          git add .
-          if git diff --cached --name-only | grep -q '^dbt_package.yml$'; then
-          # If the file is in the list, do the checkout
-            git checkout -- dbt_package.yml
-            echo "File 'dbt_package.yml' was in the list of changes and has been checked out."
-          else
-            # If the file is not in the list, provide a message
-            echo "File 'dbt_package.yml' is not in the list of changes. No checkout needed."
-          fi
-          git status
-          git commit -m "Added changes"
+#       - name: Add Files
+#         run: |
+#           git add .
+#           if git diff --cached --name-only | grep -q '^dbt_package.yml$'; then
+#           # If the file is in the list, do the checkout
+#             git checkout -- dbt_package.yml
+#             echo "File 'dbt_package.yml' was in the list of changes and has been checked out."
+#           else
+#             # If the file is not in the list, provide a message
+#             echo "File 'dbt_package.yml' is not in the list of changes. No checkout needed."
+#           fi
+#           git status
+#           git commit -m "Added changes"
           
-      - name: Opening pull request
-        id: pull
-        uses: tretuna/sync-branches@1.4.0
-        with:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          FROM_BRANCH: 'main'
-          TO_BRANCH: 'prod'
+#       - name: Opening pull request
+#         id: pull
+#         uses: tretuna/sync-branches@1.4.0
+#         with:
+#           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+#           FROM_BRANCH: 'main'
+#           TO_BRANCH: 'prod'
 
-      - name: Add Labels to PR
-        run: |
-          PR_NUMBER=$(echo "${{ steps.pull.outputs.PULL_REQUEST_NUMBER }}" | jq -r '.number')
-          echo $PR_NUMBER
-          gh pr edit PR_NUMBER --add-label new
-          gh pr edit 13 --add-label automerge
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+#       - name: Add Labels to PR
+#         run: |
+#           PR_NUMBER=$(echo "${{ steps.pull.outputs.PULL_REQUEST_NUMBER }}" | jq -r '.number')
+#           echo $PR_NUMBER
+#           gh pr edit PR_NUMBER --add-label new
+#           gh pr edit 13 --add-label automerge
+#         env:
+#           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-#       # automerge:
-#       # runs-on: ubuntu-latest
-#       # steps:
-#       #   - id: automerge
-#       #     name: automerge
-#       #     uses: "pascalgn/automerge-action@v0.16.2"
-#       #     env:
-#       #       GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-#       # - name: Add Labels to PR
-#       #   uses: actions/github-script@v7
-#       #   with:
-#       #     github-token: ${{secrets.GITHUB_TOKEN}}
-#       #     script: |
-#       #       const labelsToAdd = ['automerge']; // Add your desired labels here
-#       #       const response = await github.issues.addLabels({
-#       #         owner: context.repo.owner,
-#       #         repo: context.repo.repo,
-#       #         issue_number: context.payload.pull_request.number,
-#       #         labels: labelsToAdd
-#       #       });
-#       #       console.log(response);
+# #       # automerge:
+# #       # runs-on: ubuntu-latest
+# #       # steps:
+# #       #   - id: automerge
+# #       #     name: automerge
+# #       #     uses: "pascalgn/automerge-action@v0.16.2"
+# #       #     env:
+# #       #       GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+# #       # - name: Add Labels to PR
+# #       #   uses: actions/github-script@v7
+# #       #   with:
+# #       #     github-token: ${{secrets.GITHUB_TOKEN}}
+# #       #     script: |
+# #       #       const labelsToAdd = ['automerge']; // Add your desired labels here
+# #       #       const response = await github.issues.addLabels({
+# #       #         owner: context.repo.owner,
+# #       #         repo: context.repo.repo,
+# #       #         issue_number: context.payload.pull_request.number,
+# #       #         labels: labelsToAdd
+# #       #       });
+# #       #       console.log(response);
