@@ -27,7 +27,7 @@ jobs:
             git checkout prod
             
             # Merge the main branch into the prod branch without committing
-            git merge --no-commit main
+            git merge --no-commit main --allow-unrelated-histories
             
             # Unstage changes of the files you want to exclude
             git reset HEAD dbt_project.yml #path/to/exclude/file2
