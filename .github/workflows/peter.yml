@@ -26,5 +26,8 @@ jobs:
       - name: Checkout Prod
         run: |
           git checkout prod
-          git reset HEAD dbt_project.yml
-          git reset HEAD .github/workflows/peter.yml
+          git reset HEAD dbt_project.yml .github/workflows/peter.yml
+          git status
+          git commit -m "Merge main into prod (excluding dbt_project.yml and .github/workflows/peter.yml)"
+          git oush -u origin prod
+
