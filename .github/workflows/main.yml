@@ -19,6 +19,11 @@ jobs:
       - name: Switch to prod
         run: git checkout prod
 
+      - name: Set Git user identity
+        run: |
+          git config --local user.email "anandabhishek.78@hotmail.com"
+          git config --local user.name "anandabhishek1402"
+
       - name: Preserve specific files
         run: |
           git checkout prod -- dbt_project.yml packages.yml
@@ -29,5 +34,5 @@ jobs:
       - name: Push changes to prod
         run: |
           git config --local user.email "anandabhishek.78@hotmail.com"
-          git config --local user.name "anandabhishek1402
+          git config --local user.name "anandabhishek1402"
           git push origin prod
