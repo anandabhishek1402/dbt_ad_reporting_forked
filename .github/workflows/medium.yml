@@ -21,7 +21,14 @@ jobs:
       - name: Add Files
         run: |
           git add .
-          git checkout -- dbt_package.yml
+          if git diff --cached --name-only | grep -q '^dbt_package.yml$'; then
+          # If the file is in the list, do the checkout
+            git checkout -- dbt_package.yml
+            echo "File 'dbt_package.yml' was in the list of changes and has been checked out."
+          else
+            # If the file is not in the list, provide a message
+            echo "File 'dbt_package.yml' is not in the list of changes. No checkout needed."
+          fi
           git status
           git commit -m "Added changes"
           
