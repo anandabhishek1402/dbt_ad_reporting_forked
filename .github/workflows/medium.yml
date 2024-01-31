@@ -35,7 +35,7 @@ jobs:
         run: |
           PR_NUMBER=$(echo "${{ steps.pull.outputs.pull_request }}" | jq -r '.number')
           echo $PR_NUMBER
-          gh pr edit $PR_NUMBER --add-label automerge
+          gh pr edit 12 --add-label automerge
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
