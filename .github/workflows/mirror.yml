@@ -1,72 +1,3 @@
-# name: Sync Main to Prod
-
-# on:
-#   push:
-#     branches:
-#       - main
-
-# jobs:
-#   sync-main-to-prod:
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v2
-
-#       # - name: Create and switch to prod branch
-#       #   run: git checkout prod
-
-#       - name: Set Git user identity
-#         run: |
-#           git config --local user.email "anandabhishek.78@hotmail.com"
-#           git config --local user.name "anandabhishek1402"
-#       - name: run commands
-#         run: |
-#           # Checkout to the prod branch
-#             git fetch origin prod:prod
-#             git checkout prod
-            
-#             # Merge the main branch into the prod branch without committing
-#             git merge --no-commit main --allow-unrelated-histories
-            
-#             # Unstage changes of the files you want to exclude
-#             git reset HEAD dbt_project.yml #path/to/exclude/file2
-            
-#             # Check if there are any other changes you want to exclude
-#             git status
-            
-#             # Commit the merge
-#             git commit -m "Merge main into prod (excluding specific files)"
-
-#             git push origin prod
-
-#       # - name: Preserve specific files
-#       #   run: |
-#       #     git checkout main -- dbt_project.yml # Add the files you want to exclude here
-
-#       # - name: Exclude dbt_project.yml from changes
-#       #   run: |
-#       #     git checkout --ours dbt_project.yml
-#       #     git add dbt_project.yml
-
-#       # - name: Merge changes from main without committing
-#       #   run: git merge main --no-commit --no-ff
-
-#       # - name: Check for changes
-#       #   run: |
-#       #     git status
-
-#       # # Additional steps can be added here if needed
-
-#       # - name: Clean up if needed
-#       #   run: git merge --abort  # Abort the merge to prevent accidental commits
-
-#       # - name: Push changes to prod
-#       #   run: |
-#       #     git config --local user.email "anandabhishek.78@hotmail.com"
-#       #     git config --local user.name "anandabhishek1402"
-#       #     git push origin prod
-
 name: Sync Main to Prod
 
 on:
@@ -82,33 +13,103 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # - name: Create and switch to prod branch
+      #   run: git checkout prod
+
       - name: Set Git user identity
         run: |
           git config --local user.email "anandabhishek.78@hotmail.com"
           git config --local user.name "anandabhishek1402"
-
-      - name: Identify changed files
-        id: changed-files
+      - name: run commands
         run: |
-          changed_files=$(git diff --name-only main)
-          echo "::set-output name=changed_files::${changed_files}"
+          # Checkout to the prod branch
+            git fetch origin prod:prod
+            git checkout prod
+            
+            # Merge the main branch into the prod branch without committing
+            git merge --no-commit main --allow-unrelated-histories
+            
+            # Unstage changes of the files you want to exclude
+            #git reset HEAD dbt_project.yml #path/to/exclude/file2
+             git checkout -- prod dnt_project.yml .github/workflows/mirror.yml
+            
+            # Check if there are any other changes you want to exclude
+            git status
+            
+            # Commit the merge
+            git commit -m "Merge main into prod (excluding specific files)"
 
-      - name: Merge changes from main to prod
-        run: |
-          git fetch origin prod:prod
-          git checkout prod
+            git push origin prod
+
+      # - name: Preserve specific files
+      #   run: |
+      #     git checkout main -- dbt_project.yml # Add the files you want to exclude here
+
+      # - name: Exclude dbt_project.yml from changes
+      #   run: |
+      #     git checkout --ours dbt_project.yml
+      #     git add dbt_project.yml
+
+      # - name: Merge changes from main without committing
+      #   run: git merge main --no-commit --no-ff
+
+      # - name: Check for changes
+      #   run: |
+      #     git status
+
+      # # Additional steps can be added here if needed
+
+      # - name: Clean up if needed
+      #   run: git merge --abort  # Abort the merge to prevent accidental commits
+
+      # - name: Push changes to prod
+      #   run: |
+      #     git config --local user.email "anandabhishek.78@hotmail.com"
+      #     git config --local user.name "anandabhishek1402"
+      #     git push origin prod
+
+# name: Sync Main to Prod
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+# jobs:
+#   sync-main-to-prod:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
+
+#       - name: Set Git user identity
+#         run: |
+#           git config --local user.email "anandabhishek.78@hotmail.com"
+#           git config --local user.name "anandabhishek1402"
+
+#       - name: Identify changed files
+#         id: changed-files
+#         run: |
+#           changed_files=$(git diff --name-only main)
+#           echo "::set-output name=changed_files::${changed_files}"
+
+#       - name: Merge changes from main to prod
+#         run: |
+#           git fetch origin prod:prod
+#           git checkout prod
           
-          # Iterate over changed files and selectively merge
-          for file in $(echo "${changed_files}" | tr '\n' ' '); do
-            git checkout main -- "${file}"
-          done
+#           # Iterate over changed files and selectively merge
+#           for file in $(echo "${changed_files}" | tr '\n' ' '); do
+#             git checkout main -- "${file}"
+#           done
           
-          # Check if there are any other changes you want to exclude
-          git status
+#           # Check if there are any other changes you want to exclude
+#           git status
           
-          # Commit the merge
-          git commit -m "Merge specific changed files from main into prod"
+#           # Commit the merge
+#           git commit -m "Merge specific changed files from main into prod"
           
-          # Push changes to the prod branch
-          git push origin prod
+#           # Push changes to the prod branch
+#           git push origin prod
 
