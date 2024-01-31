@@ -23,25 +23,24 @@ jobs:
 
       - name: Preserve specific files
         run: |
-          git checkout main -- dbt_project.yml   # Add the files you want to exclude here
+          git checkout main -- dbt_project.yml # Add the files you want to exclude here
 
       - name: Exclude dbt_project.yml from changes
         run: |
           git checkout --ours dbt_project.yml
           git add dbt_project.yml
 
+      - name: Merge changes from main without committing
+        run: git merge main --no-commit --no-ff
+
       - name: Check for changes
         run: |
           git status
 
-      - name: Commit changes
-        run: git commit -am "Merge changes from main to prod (excluding dbt_project.yml)"
-        
-      # - name: Merge changes from main
-      #   run: git merge main
+      # Additional steps can be added here if needed
 
-      - name: Commit changes
-        run: git commit -am "Merge changes from main to prod (excluding dbt_project.yml)"
+      - name: Clean up if needed
+        run: git merge --abort  # Abort the merge to prevent accidental commits
 
       - name: Push changes to prod
         run: |
