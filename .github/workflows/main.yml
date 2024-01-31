@@ -13,6 +13,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Checkout code
+        run: git branch --list
+
+      - name: Checkout code
+        run: git branch --list prod
+
       - name: Switch to prod
         run: git checkout prod
 
