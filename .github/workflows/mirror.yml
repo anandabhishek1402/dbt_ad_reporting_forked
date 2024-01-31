@@ -30,8 +30,15 @@ jobs:
           git checkout --ours dbt_project.yml
           git add dbt_project.yml
 
-      - name: Merge changes from main
-        run: git merge main
+      - name: Check for changes
+        run: |
+          git status
+
+      - name: Commit changes
+        run: git commit -am "Merge changes from main to prod (excluding dbt_project.yml)"
+        
+      # - name: Merge changes from main
+      #   run: git merge main
 
       - name: Commit changes
         run: git commit -am "Merge changes from main to prod (excluding dbt_project.yml)"
