@@ -24,7 +24,7 @@ jobs:
           git checkout prod -- dbt_project.yml packages.yml
 
       - name: Merge changes from main
-        run: git merge main
+        run: git merge main --allow-unrelated-histories
 
       - name: Push changes to prod
         run: |
