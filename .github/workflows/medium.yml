@@ -34,6 +34,7 @@ jobs:
       - name: Add Labels to PR
         run: |
           PR_NUMBER=$(echo "${{ steps.pull.outputs.pull_request }}" | jq -r '.number')
+          echo $PR_NUMBER
           gh pr edit $PR_NUMBER --add-label automerge
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
