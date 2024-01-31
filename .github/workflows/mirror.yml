@@ -28,7 +28,7 @@ jobs:
       - name: Merge changes from main
         run: |
           git fetch origin main
-          git merge origin/main --no-commit --no-ff
+          git merge origin/main --no-commit --no-ff --allow-unrelated-histories
           git checkout -- dbt_project.yml  # Discard changes to dbt_project.yml
           git commit -am "Merge changes from main to prod"
 
