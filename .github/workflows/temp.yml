@@ -51,7 +51,7 @@ jobs:
         id: prtoprod
         uses: peter-evans/create-pull-request@v6
         with:
-          branch: temp
+          branch: prod
           delete-branch: false
           add-paths: |
             models/*.sql
