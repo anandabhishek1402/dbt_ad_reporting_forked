@@ -14,10 +14,10 @@ jobs:
       - name: Make changes to pull request
         run: date +%s > report.txt
 
-      - name: Make branches
-        run: |
-          git checkout -b temp
-          git checkout main
+      # - name: Make branches
+      #   run: |
+      #     git checkout -b temp
+      #     git checkout main
 
       - name: Create Pull Request
         id: cpr
