@@ -21,7 +21,8 @@ jobs:
           git checkout  prod
 
       - name: Revert Changes to 2.txt
-        run: git checkout main -- dbt_project.yml
+        run: |
+            git checkout main -- dbt_project.yml
             git status
 
       - name: Set Git user identity
