@@ -39,9 +39,10 @@ jobs:
       - name: Remove Files
         run: |
           git checkout temp
-          git checkout dbt_project.yml
+          # git checkout -- dbt_project.yml
           # git reset HEAD dbt_project.yml .github/workflows/peter.yml
           git add .
+          git checkout -- dbt_project.yml
           git status
           git commit -m "Removed Files from Temp"
           git push -u origin temp
