@@ -22,6 +22,7 @@ jobs:
 
       - name: Revert Changes to 2.txt
         run: git checkout main -- dbt_project.yml
+            git status
 
       - name: Set Git user identity
         run: |
@@ -32,10 +33,11 @@ jobs:
         run: |
           # Make necessary changes excluding modifications to 2.txt
           git add .
+          git status
           git commit -m "Automated changes"
 
       - name: Push Changes to prod
-        run: git push origin prod
+        run: git push -u origin prod
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
