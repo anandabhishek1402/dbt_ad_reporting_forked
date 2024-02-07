@@ -1,4 +1,4 @@
-#DEMO from PROD
+#DEMO from MAIN
 {% set enabled_packages = get_enabled_packages() %}
 {{ config(enabled=is_enabled(enabled_packages)) }}
 
