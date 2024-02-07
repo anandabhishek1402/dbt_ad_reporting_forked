@@ -7,3 +7,4 @@ dbt_packages/
 env/
 .github/workflows/*.yml
 *.yml
+dbt_project.yml
