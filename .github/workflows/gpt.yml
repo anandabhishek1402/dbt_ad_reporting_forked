@@ -1,0 +1,40 @@
+name: Automated Pull Request
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  create_pull_request:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Create Feature Branch
+        run: |
+          git checkout main
+          git pull origin main
+          git checkout  prod
+
+      - name: Revert Changes to 2.txt
+        run: git checkout main -- dnt_project.yml
+
+      - name: Make and Commit Changes
+        run: |
+          # Make necessary changes excluding modifications to 2.txt
+          git add .
+          git commit -m "Automated changes"
+
+      - name: Push Changes to prod
+        run: git push origin prod
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: feature-branch
+          title: "Automated Pull Request"
+          body: "This pull request is automatically generated."
