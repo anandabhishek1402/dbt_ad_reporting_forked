@@ -17,6 +17,7 @@ jobs:
         run: |
           git checkout main
           git pull origin main
+          git fetch origin prod:prod
           git checkout  prod
 
       - name: Revert Changes to 2.txt
