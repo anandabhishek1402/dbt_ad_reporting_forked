@@ -28,3 +28,6 @@ aggregated as (
 
 select *
 from aggregated
+
+
+V1
