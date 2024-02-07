@@ -23,6 +23,11 @@ jobs:
       - name: Revert Changes to 2.txt
         run: git checkout main -- dbt_project.yml
 
+      - name: Set Git user identity
+        run: |
+          git config --local user.email "anandabhishek.78@hotmail.com"
+          git config --local user.name "anandabhishek1402"
+
       - name: Make and Commit Changes
         run: |
           # Make necessary changes excluding modifications to 2.txt
