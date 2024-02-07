@@ -20,7 +20,7 @@ jobs:
           git checkout  prod
 
       - name: Revert Changes to 2.txt
-        run: git checkout main -- dnt_project.yml
+        run: git checkout main -- dbt_project.yml
 
       - name: Make and Commit Changes
         run: |
@@ -35,6 +35,6 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: feature-branch
+          branch: prod
           title: "Automated Pull Request"
           body: "This pull request is automatically generated."
