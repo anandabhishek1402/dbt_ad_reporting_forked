@@ -1,66 +1,66 @@
-name: Sync using Temp branch
-on:
-  push:
-    branches:
-      - main
+# name: Sync using Temp branch
+# on:
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  createPullRequest:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+# jobs:
+#   createPullRequest:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v4
 
-      - name: Make changes to pull request
-        run: date +%s > report.txt
+#       - name: Make changes to pull request
+#         run: date +%s > report.txt
 
-      # - name: Make branches
-      #   run: |
-      #     git checkout -b temp
-      #     git checkout main
+#       # - name: Make branches
+#       #   run: |
+#       #     git checkout -b temp
+#       #     git checkout main
 
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v6
-        with:
-          branch: temp
-          delete-branch: false
-          add-paths: |
-            models/*.sql
+#       - name: Create Pull Request
+#         id: cpr
+#         uses: peter-evans/create-pull-request@v6
+#         with:
+#           branch: temp
+#           delete-branch: false
+#           add-paths: |
+#             models/*.sql
       
           
 
-      - name: Set Git user identity
-        run: |
-          git config --local user.email "anandabhishek.78@hotmail.com"
-          git config --local user.name "anandabhishek1402"
+#       - name: Set Git user identity
+#         run: |
+#           git config --local user.email "anandabhishek.78@hotmail.com"
+#           git config --local user.name "anandabhishek1402"
 
-      # - uses: actions/checkout@v4
+#       # - uses: actions/checkout@v4
       
-      - name: Remove Files
-        run: |
-          git checkout temp
-          # git checkout -- dbt_project.yml
-          # git reset HEAD dbt_project.yml .github/workflows/peter.yml
-          git add .
-          git checkout -- dbt_project.yml
-          git status
-          git commit -m "Removed Files from Temp"
-          git push -u origin temp
+#       - name: Remove Files
+#         run: |
+#           git checkout temp
+#           # git checkout -- dbt_project.yml
+#           # git reset HEAD dbt_project.yml .github/workflows/peter.yml
+#           git add .
+#           git checkout -- dbt_project.yml
+#           git status
+#           git commit -m "Removed Files from Temp"
+#           git push -u origin temp
 
-      - name: Create Pull Request
-        id: prtoprod
-        uses: peter-evans/create-pull-request@v6
-        with:
-          branch: prod
-          delete-branch: false
-          add-paths: |
-            models/*.sql
+#       - name: Create Pull Request
+#         id: prtoprod
+#         uses: peter-evans/create-pull-request@v6
+#         with:
+#           branch: prod
+#           delete-branch: false
+#           add-paths: |
+#             models/*.sql
             
-      # - name: Checkout Prod
-      #   run: |
-      #     git checkout prod
-      #     git reset HEAD dbt_project.yml .github/workflows/peter.yml
-      #     git status
-      #     git commit -m "Merge main into prod (excluding dbt_project.yml and .github/workflows/peter.yml)"
-      #     git push -u origin prod
+#       # - name: Checkout Prod
+#       #   run: |
+#       #     git checkout prod
+#       #     git reset HEAD dbt_project.yml .github/workflows/peter.yml
+#       #     git status
+#       #     git commit -m "Merge main into prod (excluding dbt_project.yml and .github/workflows/peter.yml)"
+#       #     git push -u origin prod
 
