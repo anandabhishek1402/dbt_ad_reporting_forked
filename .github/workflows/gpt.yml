@@ -41,6 +41,6 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: prod
+          branch: main
           title: "Automated Pull Request"
           body: "This pull request is automatically generated."
